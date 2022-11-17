@@ -19,6 +19,9 @@ class MainActivity : AppCompatActivity() {
         val enterAge = findViewById<EditText>(R.id.enterAge)
         val Name = findViewById<TextView>(R.id.Name)
         val Age = findViewById<TextView>(R.id.Age)
+        val deleteBtn = findViewById<Button>(R.id.deleteName)
+
+
 
         addName.setOnClickListener {
             val db = DBHelper(this,null)
@@ -44,6 +47,12 @@ class MainActivity : AppCompatActivity() {
                 Age.append(cursor.getColumnIndex(DBHelper.AGE_COL).toString())
             }
             cursor.close()
+        }
+
+        deleteBtn.setOnClickListener {
+            val db = DBHelper(this,null)
+            db.deleteData()
+            Toast.makeText(this,"Delete",Toast.LENGTH_SHORT).show()
         }
     }
 }

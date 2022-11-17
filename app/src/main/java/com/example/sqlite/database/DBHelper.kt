@@ -5,6 +5,7 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import androidx.core.content.contentValuesOf
 
 class DBHelper(context:Context,factory: SQLiteDatabase.CursorFactory?) : SQLiteOpenHelper(context,DATABASE_NAME,factory,DATABASE_VERSION) {
 
@@ -37,7 +38,6 @@ class DBHelper(context:Context,factory: SQLiteDatabase.CursorFactory?) : SQLiteO
         val values =  ContentValues()
         values.put(NAME_COL,name)
         values.put(AGE_COL,age)
-
         val db:SQLiteDatabase = writableDatabase
         db.insert(TABLE_NAME,null,values)
         db.close()
@@ -47,8 +47,15 @@ class DBHelper(context:Context,factory: SQLiteDatabase.CursorFactory?) : SQLiteO
     fun getName():Cursor{
 
          val db:SQLiteDatabase = readableDatabase
-      //   return db.rawQuery("SELECT * FROM" + TABLE_NAME, null)
-        return db.rawQuery("SELECT * FROM $TABLE_NAME",null)
+         return db.rawQuery("SELECT * FROM $TABLE_NAME",null)
+    }
+
+    //this method is to delete the data from the database
+    fun deleteData(){
+
+        val db: SQLiteDatabase = writableDatabase
+        db.delete(TABLE_NAME,"$AGE_COL=?" , arrayOf())
+        db.close()
     }
 
 }
